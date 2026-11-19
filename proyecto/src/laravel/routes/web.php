@@ -8,3 +8,7 @@ Route::get('/', function () {
 Route::view('/', 'landing.index')-> name('index');
 
 Route::view('/about', 'landing.about')-> name('about');
+ Route::view('/', 'landing.home')->name('home');
+
+ Route::view('/contact', 'landing.contact')->name('contact');
+

@@ -3,8 +3,8 @@
 | | |
 |---|---|
 | **Fecha de inicio** | 09/11/2026 |
-| **Fecha de fin** | 16/11/2026 |
-| **Tiempo dedicado** | 1 horas |
+| **Fecha de fin** | 19/11/2026 |
+| **Tiempo dedicado** | 4 horas |
 | **Rama de Git** | `tema01` |
 
 ---
@@ -27,13 +27,13 @@ Instalación del proyecto con Docker y creación del proyecto laravel
 Se van a crear tres vistas llamadas home, about y contact
 
 Vista *about.blade.php*
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+![Descripción de la captura](img/tema01/about.png)
 
 Vista *home.blade.php*
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+![Descripción de la captura](img/tema01/home.png)
 
 Vista *contact.blade.php*
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+![Descripción de la captura](img/tema01/contact.png)
 ### 2.2 Definición de rutas
 
 ```php
@@ -49,9 +49,10 @@ Vista *contact.blade.php*
 
 | Comando | Para qué sirve |
 |---------|----------------|
-| `php artisan ...` | ... |
-| `composer ...` | descripcion del comando |
-| `docker-compose` | descripcion |
+| `php artisan ...` | Herramienta de línea de comandos de Laravel: crea componentes, gestiona rutas, limpia caché, ejecuta migraciones, etc. |
+| `composer ...` | Gestor de dependencias de PHP: crea el proyecto Laravel e instala o actualiza sus librerías |
+| `docker-compose` | Levanta, reinicia y detiene los contenedores del proyecto (nginx y PHP) definidos en `docker-compose.yml` |
+
 
 ---
 
@@ -61,7 +62,7 @@ Vista *contact.blade.php*
      Copia el error como texto, no como captura.
      Si no has tenido ningún problema, documenta al menos algo que hayas tenido que investigar. -->
 
-### Problema 1: Comprobación del funcionamiento de laravel después d esu instalación
+### Problema 1: Comprobación del funcionamiento de laravel después de su instalación
 
 **Qué estaba haciendo:** Comprobar el correcto funcionamiento de laravel una vez creaod el proyecto básico.
 
@@ -98,24 +99,31 @@ SESSION_DRIVER=file
 
 ### Problema 2: [Descripción corta]
 
-...
+Tuve un fallo al abrir las páginas de about y contact
+
+**Causa:** Faltaba/Habia que cambiar unas lineas en la carpeta de  nginx -> default.conf
+**Solución:** 
+try_files $uri $uri/ /index.php?$query_string; 
+index index.php;  
 
 ---
 
 ## 5. ✅ Resultado final
 
 Vista *about.blade.php*
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+![Descripción de la captura](img/tema01/about.png)
 
 Vista *home.blade.php*
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+![Descripción de la captura](img/tema01/home.png)
 
 Vista *contact.blade.php*
-![Descripción de la captura](img/temaXX/01-descripcion.png)
+![Descripción de la captura](img/tema01/contact.png)
 ---
 
 ## 6. 💭 Conclusiones
 
-- **Qué he aprendido:** ...
-- **Qué me ha costado más:** ...
-- **Qué haría diferente / dudas pendientes:** ...
+- **Qué he aprendido:** A definir rutas con `Route::view()` y nombrarlas para usarlas con `route()` en las vistas, y a montar Laravel sobre Docker con nginx y PHP-FPM.
+- **Qué me ha costado más:** Averiguar por qué `/about` y `/contact` daban "File not found" y luego un 403. El problema estaba en la configuración de nginx: faltaba un espacio en `try_files` y la directiva `index index.php;`.
+- **Qué haría diferente / dudas pendientes:** Revisaría antes la configuración del servidor y no solo el código de Laravel. Me queda pendiente entender mejor cómo se comunican nginx y PHP-FPM dentro de Docker.
+
+---
