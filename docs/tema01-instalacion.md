@@ -22,29 +22,26 @@ Instalación del proyecto con Docker y creación del proyecto laravel
      - El comando o el código, en un bloque de código (nunca como captura).
      - Una captura solo si aporta algo visual (navegador, resultado, estructura...). -->
 
-### 2.1 [Nombre del paso]
+### 2.1 Creación de vistas
 
-Explicación de lo que hago y para qué sirve.
+Se van a crear tres vistas llamadas home, about y contact
 
-```bash
-php artisan make:model Producto -m
-```
-
-Fragmento de código relevante (indica el archivo):
-
-```php
-// proyecto/app/Models/Producto.php
-class Producto extends Model
-{
-    protected $fillable = ['nombre', 'precio'];
-}
-```
-
+Vista *about.blade.php*
 ![Descripción de la captura](img/temaXX/01-descripcion.png)
 
-### 2.2 [Nombre del paso]
+Vista *home.blade.php*
+![Descripción de la captura](img/temaXX/01-descripcion.png)
 
-...
+Vista *contact.blade.php*
+![Descripción de la captura](img/temaXX/01-descripcion.png)
+### 2.2 Definición de rutas
+
+```php
+ Route::view('/', 'home')->name('home');
+ Route::view('/about', 'about')->name('about');
+ Route::view('/contact', 'contact')->name('contact');
+```
+
 
 ---
 
@@ -53,8 +50,8 @@ class Producto extends Model
 | Comando | Para qué sirve |
 |---------|----------------|
 | `php artisan ...` | ... |
-| `composer ...` | ... |
-| `git ...` | ... |
+| `composer ...` | descripcion del comando |
+| `docker-compose` | descripcion |
 
 ---
 
@@ -64,25 +61,40 @@ class Producto extends Model
      Copia el error como texto, no como captura.
      Si no has tenido ningún problema, documenta al menos algo que hayas tenido que investigar. -->
 
-### Problema 1: [Descripción corta]
+### Problema 1: Comprobación del funcionamiento de laravel después d esu instalación
 
-**Qué estaba haciendo:** ...
+**Qué estaba haciendo:** Comprobar el correcto funcionamiento de laravel una vez creaod el proyecto básico.
 
 **Error:**
 
 ```
-Pega aquí el mensaje de error completo
+Acceso denegado
 ```
 
-**Causa:** por qué ocurría (lo que has entendido, no solo lo que has hecho).
+**Causa:** problema de permisos
 
 **Solución:**
+Ejecutamos en la terminal los siguientes comandos
 
 ```bash
-comando o cambio que lo resolvió
+docker exec -it proyecto-php-1 bash
+	php artisan key:generate
+	chmod -R 775 storage bootstrap/cache
+	chown -R www-data:www-data storage bootstrap/cache
+```
+Posteriormente será necesario añadir el fichero *.env* la siguiente configuración
+
+```
+bash
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=test
+DB_USERNAME=alumno
+DB_PASSWORD=alumno
+SESSION_DRIVER=file
 ```
 
-**Fuente:** [enlace a la documentación, foro, vídeo...](https://)
+**Fuente:** chatgpt
 
 ### Problema 2: [Descripción corta]
 
@@ -92,10 +104,14 @@ comando o cambio que lo resolvió
 
 ## 5. ✅ Resultado final
 
-<!-- Captura(s) de la aplicación funcionando al terminar el tema. -->
+Vista *about.blade.php*
+![Descripción de la captura](img/temaXX/01-descripcion.png)
 
-![Resultado final del tema](img/temaXX/99-resultado-final.png)
+Vista *home.blade.php*
+![Descripción de la captura](img/temaXX/01-descripcion.png)
 
+Vista *contact.blade.php*
+![Descripción de la captura](img/temaXX/01-descripcion.png)
 ---
 
 ## 6. 💭 Conclusiones
